@@ -1,0 +1,17 @@
+Index: src/main/java/ro/lucian_lazar/licenta_backend/dto/UserDTO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/ro/lucian_lazar/licenta_backend/dto/UserDTO.java b/src/main/java/ro/lucian_lazar/licenta_backend/dto/UserDTO.java
+--- a/src/main/java/ro/lucian_lazar/licenta_backend/dto/UserDTO.java	
++++ b/src/main/java/ro/lucian_lazar/licenta_backend/dto/UserDTO.java	(date 1749824749728)
+@@ -25,7 +25,7 @@
+     @Column(name = "prenume")
+     private String lastName;
+ 
+-    @Column(name = "sex")
++    @Column(name = "gen")
+     private String gender;
+ 
+     @Column(name = "email")
