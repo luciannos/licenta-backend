@@ -29,7 +29,7 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterDTO dto) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             return ResponseEntity.badRequest().body("Email deja folosit.");
         }
@@ -39,7 +39,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginDTO dto) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginDto dto) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getParola()));
         String token = jwtUtil.genereazaToken(dto.getEmail());
         return ResponseEntity.ok(new JwtResponse(token));

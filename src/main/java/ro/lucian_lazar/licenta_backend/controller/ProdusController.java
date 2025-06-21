@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/produse")
-public class ProductController {
+public class ProdusController {
 
     @Autowired
     private ProductService productService;
@@ -46,8 +46,12 @@ public class ProductController {
         if (existent == null) {
             return ResponseEntity.notFound().build();
         }
-        existent.setNume(dto.getNume());
+
+        existent.setDenumire(dto.getDenumire());
         existent.setPret(dto.getPret());
+        existent.setStoc(dto.getStoc());
+        existent.setCategorie(dto.getCategorie());
+
         Produs updated = productService.save(existent);
         return ResponseEntity.ok(ProdusMapper.toDto(updated));
     }

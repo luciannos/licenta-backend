@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
 @Getter
 @Setter
 
-public class RegisterDTO {
+public class RegisterDto {
 
     @NotBlank(message = "Numele este obligatoriu.")
     private String nume;
@@ -37,5 +37,4 @@ public class RegisterDTO {
     private String telefon;
 
 
-    // Getters & Setters
 }

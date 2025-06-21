@@ -2,7 +2,6 @@ package ro.lucian_lazar.licenta_backend.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public class ProdusDto {
     private Long id;
@@ -16,7 +15,7 @@ public class ProdusDto {
     @Min(value = 0, message = "Stocul nu poate fi negativ")
     private int stoc;
 
-    @NotBlank(message = "Categoria este obligatorie")
+    @NotBlank
     private String categorie;
 
     public Long getId() {

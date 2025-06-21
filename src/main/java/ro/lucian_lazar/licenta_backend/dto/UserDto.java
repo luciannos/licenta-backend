@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
 })
-public class UserDTO {
+public class UserDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

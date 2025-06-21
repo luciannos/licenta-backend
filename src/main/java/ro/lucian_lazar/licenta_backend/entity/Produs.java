@@ -1,23 +1,29 @@
 package ro.lucian_lazar.licenta_backend.entity;
 
 import jakarta.persistence.*;
-import ro.lucian_lazar.licenta_backend.model.ProductOrder;
-
-import java.util.List;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "produse")
 public class Produs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nume;
+    @NotBlank(message = "Denumirea este obligatorie")
+    private String denumire;
 
+    @Min(value = 0, message = "Prețul trebuie să fie pozitiv")
     private double pret;
 
-    @OneToMany(mappedBy = "produs", cascade = CascadeType.ALL)
-    private List<ProductOrder> comenziProdus;
+    @Min(value = 0, message = "Stocul nu poate fi negativ")
+    private int stoc;
+
+    @NotBlank(message = "Categoria este obligatorie")
+    private String categorie;
+
 
     public Long getId() {
         return id;
@@ -27,12 +33,12 @@ public class Produs {
         this.id = id;
     }
 
-    public String getNume() {
-        return nume;
+    public String getDenumire() {
+        return denumire;
     }
 
-    public void setNume(String nume) {
-        this.nume = nume;
+    public void setDenumire(String denumire) {
+        this.denumire = denumire;
     }
 
     public double getPret() {
@@ -43,11 +49,19 @@ public class Produs {
         this.pret = pret;
     }
 
-    public List<ProductOrder> getComenziProdus() {
-        return comenziProdus;
+    public int getStoc() {
+        return stoc;
     }
 
-    public void setComenziProdus(List<ProductOrder> comenziProdus) {
-        this.comenziProdus = comenziProdus;
+    public void setStoc(int stoc) {
+        this.stoc = stoc;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
     }
 }

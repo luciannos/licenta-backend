@@ -29,7 +29,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/v3/api-docs/**",
-                                "/api/produse/**" // opțional: expune și produsele fără login
+                                "/api/produse/**",
+                                "/api/user/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

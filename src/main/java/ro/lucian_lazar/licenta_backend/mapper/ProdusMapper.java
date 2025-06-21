@@ -8,16 +8,20 @@ public class ProdusMapper {
     public static ProdusDto toDto(Produs entity) {
         ProdusDto dto = new ProdusDto();
         dto.setId(entity.getId());
-        dto.setNume(entity.getNume());
+        dto.setDenumire(entity.getDenumire());
         dto.setPret(entity.getPret());
+        dto.setStoc(entity.getStoc());
+        dto.setCategorie(entity.getCategorie());
         return dto;
     }
 
     public static Produs toEntity(ProdusDto dto) {
         Produs entity = new Produs();
         entity.setId(dto.getId());
-        entity.setNume(dto.getNume());
+        entity.setDenumire(dto.getDenumire());
         entity.setPret(dto.getPret());
+        entity.setStoc(dto.getStoc());
+        entity.setCategorie(dto.getCategorie());
         return entity;
     }
 }
