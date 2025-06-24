@@ -1,7 +1,6 @@
 package ro.lucian_lazar.licenta_backend.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.lucian_lazar.licenta_backend.dto.ProdusDto;
@@ -16,13 +15,18 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/produse")
 public class ProdusController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
+    private final ProdusMapper produsMapper;
+
+    public ProdusController(ProductService productService, ProdusMapper produsMapper) {
+        this.productService = productService;
+        this.produsMapper = produsMapper;
+    }
 
     @GetMapping
     public List<ProdusDto> getAllProduse() {
         return productService.getAll().stream()
-                .map(ProdusMapper::toDto)
+                .map(produsMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
@@ -30,14 +34,14 @@ public class ProdusController {
     public ResponseEntity<ProdusDto> getProdusById(@PathVariable Long id) {
         Produs produs = productService.getById(id);
         return produs != null
-                ? ResponseEntity.ok(ProdusMapper.toDto(produs))
+                ? ResponseEntity.ok(produsMapper.entityToDto(produs))
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping
     public ResponseEntity<ProdusDto> createProdus(@Valid @RequestBody ProdusDto dto) {
-        Produs produs = productService.save(ProdusMapper.toEntity(dto));
-        return ResponseEntity.ok(ProdusMapper.toDto(produs));
+        Produs produs = productService.save(produsMapper.dtoToEntity(dto));
+        return ResponseEntity.ok(produsMapper.entityToDto(produs));
     }
 
     @PutMapping("/{id}")
@@ -51,9 +55,11 @@ public class ProdusController {
         existent.setPret(dto.getPret());
         existent.setStoc(dto.getStoc());
         existent.setCategorie(dto.getCategorie());
+        existent.setImagine(dto.getImagine());
+        existent.setDescriere(dto.getDescriere());
 
         Produs updated = productService.save(existent);
-        return ResponseEntity.ok(ProdusMapper.toDto(updated));
+        return ResponseEntity.ok(produsMapper.entityToDto(updated));
     }
 
     @DeleteMapping("/{id}")

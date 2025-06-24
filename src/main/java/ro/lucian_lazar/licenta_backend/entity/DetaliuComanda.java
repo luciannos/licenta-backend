@@ -13,27 +13,24 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "produse")
-public class Produs {
+@Table(name = "detalii_comanda")
+public class DetaliuComanda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String denumire;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_comanda", nullable = false)
+    private Comanda comanda;
 
-    @Lob
-    private String descriere;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_produs", nullable = false)
+    private Produs produs;
 
     @Column(nullable = false)
-    private String categorie;
+    private int cantitate;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal pret;
-
-    private String imagine;
-
-    @Column(nullable = false)
-    private int stoc;
-}
+    private BigDecimal pret_unitar;
+} 

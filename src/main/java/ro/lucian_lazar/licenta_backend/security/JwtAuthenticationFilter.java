@@ -11,8 +11,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import ro.lucian_lazar.licenta_backend.controller.AuthController;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -22,10 +24,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+    
+    private static final List<String> PUBLIC_PATHS = List.of(
+            "/api/auth",
+            "/swagger-ui",
+            "/v3/api-docs",
+            "/api/produse"
+    );
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+
+        String path = request.getRequestURI();
+        boolean isPublicPath = PUBLIC_PATHS.stream().anyMatch(path::startsWith);
+
+        if (isPublicPath) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String header = request.getHeader("Authorization");
 
         String email = null;
@@ -33,6 +51,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (header != null && header.startsWith("Bearer ")) {
             token = header.substring(7);
+            if (AuthController.TOKEN_BLACKLIST.contains(token)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
             email = jwtUtil.extrageEmailDinToken(token);
         }
 

@@ -1,27 +1,39 @@
 package ro.lucian_lazar.licenta_backend.mapper;
 
+import org.springframework.stereotype.Component;
 import ro.lucian_lazar.licenta_backend.dto.ProdusDto;
 import ro.lucian_lazar.licenta_backend.entity.Produs;
 
+@Component
 public class ProdusMapper {
 
-    public static ProdusDto toDto(Produs entity) {
-        ProdusDto dto = new ProdusDto();
-        dto.setId(entity.getId());
-        dto.setDenumire(entity.getDenumire());
-        dto.setPret(entity.getPret());
-        dto.setStoc(entity.getStoc());
-        dto.setCategorie(entity.getCategorie());
-        return dto;
+    public Produs dtoToEntity(ProdusDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new Produs(
+                dto.getId(),
+                dto.getDenumire(),
+                dto.getDescriere(),
+                dto.getCategorie(),
+                dto.getPret(),
+                dto.getImagine(),
+                dto.getStoc()
+        );
     }
 
-    public static Produs toEntity(ProdusDto dto) {
-        Produs entity = new Produs();
-        entity.setId(dto.getId());
-        entity.setDenumire(dto.getDenumire());
-        entity.setPret(dto.getPret());
-        entity.setStoc(dto.getStoc());
-        entity.setCategorie(dto.getCategorie());
-        return entity;
+    public ProdusDto entityToDto(Produs entity) {
+        if (entity == null) {
+            return null;
+        }
+        return new ProdusDto(
+                entity.getId(),
+                entity.getDenumire(),
+                entity.getDescriere(),
+                entity.getCategorie(),
+                entity.getPret(),
+                entity.getImagine(),
+                entity.getStoc()
+        );
     }
 }

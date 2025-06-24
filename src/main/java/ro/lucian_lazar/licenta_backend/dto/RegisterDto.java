@@ -6,6 +6,7 @@ import lombok.Setter;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 
 @Getter
 @Setter
@@ -26,7 +27,11 @@ public class RegisterDto {
     private String email;
 
     @NotBlank(message = "Parola este obligatorie.")
-    @Size(min = 6, message = "Parola trebuie să aibă cel puțin 6 caractere.")
+    @Size(min = 8, message = "Parola trebuie să aibă cel puțin 8 caractere.")
+    @Pattern(
+        regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$",
+        message = "Parola trebuie să conțină cel puțin o literă mare, o literă mică, un număr și un caracter special (!@#$%^&*)"
+    )
     private String parola;
 
 

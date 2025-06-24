@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import ro.lucian_lazar.licenta_backend.entity.Comanda;
 import ro.lucian_lazar.licenta_backend.entity.Produs;
 
-@Entity
-@Table(name = "comanda_produs")
 public class DetaliuComanda {
 
     @Id
@@ -22,5 +20,4 @@ public class DetaliuComanda {
     @JoinColumn(name = "produs_id", nullable = false)
     private Produs produs;
 
-    // Getteri și setteri
 }

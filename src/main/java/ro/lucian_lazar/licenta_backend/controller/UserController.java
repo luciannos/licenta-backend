@@ -14,8 +14,4 @@ public class UserController {
     public ResponseEntity<String> profil(Authentication authentication) {
         return ResponseEntity.ok("Salut, " + authentication.getName());
     }
-    @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<UserDto> register(@ModelAttribute UserDto user) {
-        return ResponseEntity.ok(user);
-    }
 }

@@ -11,12 +11,8 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProdusDto {
-    private Long id;
-    private String denumire;
-    private String descriere;
-    private String categorie;
-    private BigDecimal pret;
-    private String imagine;
-    private int stoc;
-}
+public class DetaliuComandaDto {
+    private Long idProdus;
+    private int cantitate;
+    private BigDecimal pretUnitar;
+} 
