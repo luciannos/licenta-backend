@@ -8,7 +8,12 @@ import org.springframework.stereotype.Service;
 import ro.lucian_lazar.licenta_backend.entity.User;
 import ro.lucian_lazar.licenta_backend.repository.UserRepository;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Service
@@ -22,8 +27,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Utilizatorul nu a fost găsit."));
 
-        // Spring Security adaugă automat prefixul "ROLE_"
-        var authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
+        Collection<? extends GrantedAuthority> authorities = Arrays.stream(user.getRole().split(","))
+                .map(String::trim)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),

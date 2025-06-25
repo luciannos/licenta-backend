@@ -15,4 +15,5 @@ public class DetaliuComandaDto {
     private Long idProdus;
     private int cantitate;
     private BigDecimal pretUnitar;
+    private String denumireProdus;
 } 

@@ -9,6 +9,7 @@ import ro.lucian_lazar.licenta_backend.mapper.ComandaMapper;
 import ro.lucian_lazar.licenta_backend.mapper.ProdusMapper;
 import ro.lucian_lazar.licenta_backend.service.ComandaService;
 import ro.lucian_lazar.licenta_backend.service.ProductService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +46,7 @@ public class AdminController {
     }
 
     @GetMapping("/comenzi")
+    @Transactional(readOnly = true)
     public ResponseEntity<List<ComandaDto>> getIstoricComenzi() {
         List<ComandaDto> comenzi = comandaService.getAllComenzi().stream()
                 .map(comandaMapper::toDto)

@@ -19,11 +19,13 @@ public class ComandaMapper {
         ComandaDto dto = new ComandaDto();
         dto.setId(comanda.getId());
         dto.setIdUtilizator(comanda.getUtilizator().getId());
-        dto.setDataComenzii(comanda.getData_comenzii());
+        dto.setUserName(comanda.getUtilizator().getNume() + " " + comanda.getUtilizator().getPrenume());
+        dto.setDataComanda(comanda.getData_comenzii());
         dto.setStatus(comanda.getStatus());
         dto.setTotal(comanda.getTotal());
+        dto.setAdresaLivrare(comanda.getAdresaLivrare());
         if (comanda.getDetaliiComanda() != null) {
-            dto.setDetalii(comanda.getDetaliiComanda().stream()
+            dto.setDetaliiComanda(comanda.getDetaliiComanda().stream()
                     .map(this::toDetaliuDto)
                     .collect(Collectors.toList()));
         }
@@ -38,6 +40,7 @@ public class ComandaMapper {
         dto.setIdProdus(detaliu.getProdus().getId());
         dto.setCantitate(detaliu.getCantitate());
         dto.setPretUnitar(detaliu.getPret_unitar());
+        dto.setDenumireProdus(detaliu.getProdus().getDenumire());
         return dto;
     }
 } 

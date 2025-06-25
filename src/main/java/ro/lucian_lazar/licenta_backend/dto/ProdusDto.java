@@ -19,4 +19,5 @@ public class ProdusDto {
     private BigDecimal pret;
     private String imagine;
     private int stoc;
+    private int numarVanzari;
 }

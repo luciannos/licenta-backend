@@ -36,4 +36,7 @@ public class Produs {
 
     @Column(nullable = false)
     private int stoc;
+
+    @Column(nullable = false)
+    private int numarVanzari = 0;
 }

@@ -24,7 +24,7 @@ public class DetaliuComanda {
     @JoinColumn(name = "id_comanda", nullable = false)
     private Comanda comanda;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_produs", nullable = false)
     private Produs produs;
 

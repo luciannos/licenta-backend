@@ -16,8 +16,10 @@ import java.util.List;
 public class ComandaDto {
     private Long id;
     private Long idUtilizator;
-    private LocalDateTime dataComenzii;
+    private String userName;
+    private LocalDateTime dataComanda;
     private String status;
     private BigDecimal total;
-    private List<DetaliuComandaDto> detalii;
+    private String adresaLivrare;
+    private List<DetaliuComandaDto> detaliiComanda;
 }

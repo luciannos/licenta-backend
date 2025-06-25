@@ -3,6 +3,7 @@ package ro.lucian_lazar.licenta_backend.service;
 import org.springframework.stereotype.Service;
 import ro.lucian_lazar.licenta_backend.entity.Produs;
 import ro.lucian_lazar.licenta_backend.repository.ProdusRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,5 +30,10 @@ public class ProductService {
 
     public void delete(long id) {
         productRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Produs> getTopVanzari() {
+        return productRepository.findTop5ByOrderByNumarVanzariDesc();
     }
 }

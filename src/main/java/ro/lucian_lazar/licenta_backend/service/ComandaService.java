@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import ro.lucian_lazar.licenta_backend.dto.ComandaDto;
 import ro.lucian_lazar.licenta_backend.dto.DetaliuComandaDto;
+import ro.lucian_lazar.licenta_backend.dto.PlaseazaComandaRequestDto;
 import ro.lucian_lazar.licenta_backend.entity.Comanda;
 import ro.lucian_lazar.licenta_backend.entity.DetaliuComanda;
 import ro.lucian_lazar.licenta_backend.entity.Produs;
@@ -41,15 +42,16 @@ public class ComandaService {
     }
 
     @Transactional
-    public ComandaDto plaseazaComanda(String userEmail, List<DetaliuComandaDto> detaliiComandaDto) {
+    public ComandaDto plaseazaComanda(String userEmail, PlaseazaComandaRequestDto request) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Comanda comanda = new Comanda();
         comanda.setUtilizator(user);
         comanda.setStatus("Plasata");
+        comanda.setAdresaLivrare(request.getAdresaLivrare());
 
-        List<DetaliuComanda> detalii = detaliiComandaDto.stream()
+        List<DetaliuComanda> detalii = request.getDetaliiComanda().stream()
                 .map(dto -> {
                     Produs produs = produsRepository.findById(dto.getIdProdus())
                             .orElseThrow(() -> new RuntimeException("Product not found with id: " + dto.getIdProdus()));
@@ -78,5 +80,13 @@ public class ComandaService {
         Comanda comandaSalvata = comandaRepository.save(comanda);
 
         return comandaMapper.toDto(comandaSalvata);
+    }
+
+    public List<Comanda> getComenziByUserEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return comandaRepository.findAll().stream()
+                .filter(c -> c.getUtilizator().getId().equals(user.getId()))
+                .collect(Collectors.toList());
     }
 } 

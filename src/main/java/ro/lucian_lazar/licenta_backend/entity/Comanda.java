@@ -34,6 +34,9 @@ public class Comanda {
     @Column(nullable = false)
     private String status;
 
+    @Column(name = "adresa_livrare")
+    private String adresaLivrare;
+
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
 

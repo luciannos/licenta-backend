@@ -12,6 +12,7 @@ import ro.lucian_lazar.licenta_backend.repository.UserRepository;
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.List;
+import java.util.Arrays;
 
 @Component
 public class JwtUtil {
@@ -32,9 +33,11 @@ public class JwtUtil {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         
+        List<String> roles = Arrays.asList(user.getRole().split(","));
+
         return Jwts.builder()
                 .subject(email)
-                .claim("roles", List.of(user.getRole()))
+                .claim("roles", roles)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
                 .signWith(getSigningKey())

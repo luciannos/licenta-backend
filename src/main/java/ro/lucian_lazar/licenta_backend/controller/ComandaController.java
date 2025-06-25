@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ro.lucian_lazar.licenta_backend.dto.ComandaDto;
 import ro.lucian_lazar.licenta_backend.dto.DetaliuComandaDto;
+import ro.lucian_lazar.licenta_backend.dto.PlaseazaComandaRequestDto;
 import ro.lucian_lazar.licenta_backend.service.ComandaService;
 
 import java.util.List;
@@ -25,9 +26,9 @@ public class ComandaController {
 
     @PostMapping
     public ResponseEntity<ComandaDto> plaseazaComanda(
-            @RequestBody List<DetaliuComandaDto> detaliiComanda,
+            @RequestBody PlaseazaComandaRequestDto request,
             @AuthenticationPrincipal UserDetails userDetails) {
-        ComandaDto comandaPlasata = comandaService.plaseazaComanda(userDetails.getUsername(), detaliiComanda);
+        ComandaDto comandaPlasata = comandaService.plaseazaComanda(userDetails.getUsername(), request);
         return ResponseEntity.ok(comandaPlasata);
     }
 } 

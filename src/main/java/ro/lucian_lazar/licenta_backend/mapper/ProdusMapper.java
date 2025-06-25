@@ -18,7 +18,8 @@ public class ProdusMapper {
                 dto.getCategorie(),
                 dto.getPret(),
                 dto.getImagine(),
-                dto.getStoc()
+                dto.getStoc(),
+                dto.getNumarVanzari()
         );
     }
 
@@ -33,7 +34,8 @@ public class ProdusMapper {
                 entity.getCategorie(),
                 entity.getPret(),
                 entity.getImagine(),
-                entity.getStoc()
+                entity.getStoc(),
+                entity.getNumarVanzari()
         );
     }
 }

@@ -67,4 +67,11 @@ public class ProdusController {
         productService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/recomandate")
+    public List<ProdusDto> getRecomandari() {
+        return productService.getTopVanzari().stream()
+                .map(produsMapper::entityToDto)
+                .collect(Collectors.toList());
+    }
 }
