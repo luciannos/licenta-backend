@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ro.lucian_lazar.licenta_backend.dto.ProdusDto;
 import ro.lucian_lazar.licenta_backend.entity.Produs;
 import ro.lucian_lazar.licenta_backend.mapper.ProdusMapper;
-import ro.lucian_lazar.licenta_backend.service.ProductService;
+import ro.lucian_lazar.licenta_backend.service.ProdusService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,24 +15,24 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/produse")
 public class ProdusController {
 
-    private final ProductService productService;
+    private final ProdusService produsService;
     private final ProdusMapper produsMapper;
 
-    public ProdusController(ProductService productService, ProdusMapper produsMapper) {
-        this.productService = productService;
+    public ProdusController(ProdusService produsService, ProdusMapper produsMapper) {
+        this.produsService = produsService;
         this.produsMapper = produsMapper;
     }
 
     @GetMapping
     public List<ProdusDto> getAllProduse() {
-        return productService.getAll().stream()
+        return produsService.getAll().stream()
                 .map(produsMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProdusDto> getProdusById(@PathVariable Long id) {
-        Produs produs = productService.getById(id);
+        Produs produs = produsService.getById(id);
         return produs != null
                 ? ResponseEntity.ok(produsMapper.entityToDto(produs))
                 : ResponseEntity.notFound().build();
@@ -40,13 +40,13 @@ public class ProdusController {
 
     @PostMapping
     public ResponseEntity<ProdusDto> createProdus(@Valid @RequestBody ProdusDto dto) {
-        Produs produs = productService.save(produsMapper.dtoToEntity(dto));
+        Produs produs = produsService.save(produsMapper.dtoToEntity(dto));
         return ResponseEntity.ok(produsMapper.entityToDto(produs));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProdusDto> updateProdus(@PathVariable Long id, @Valid @RequestBody ProdusDto dto) {
-        Produs existent = productService.getById(id);
+        Produs existent = produsService.getById(id);
         if (existent == null) {
             return ResponseEntity.notFound().build();
         }
@@ -58,19 +58,19 @@ public class ProdusController {
         existent.setImagine(dto.getImagine());
         existent.setDescriere(dto.getDescriere());
 
-        Produs updated = productService.save(existent);
+        Produs updated = produsService.save(existent);
         return ResponseEntity.ok(produsMapper.entityToDto(updated));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProdus(@PathVariable Long id) {
-        productService.delete(id);
+        produsService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/recomandate")
     public List<ProdusDto> getRecomandari() {
-        return productService.getTopVanzari().stream()
+        return produsService.getTopVanzari().stream()
                 .map(produsMapper::entityToDto)
                 .collect(Collectors.toList());
     }

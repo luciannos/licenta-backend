@@ -8,11 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ProductService {
+public class ProdusService {
 
     private final ProdusRepository productRepository;
 
-    public ProductService(ProdusRepository productRepository) {
+    public ProdusService(ProdusRepository productRepository) {
         this.productRepository = productRepository;
     }
 

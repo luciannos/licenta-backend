@@ -8,7 +8,7 @@ import ro.lucian_lazar.licenta_backend.entity.Produs;
 import ro.lucian_lazar.licenta_backend.mapper.ComandaMapper;
 import ro.lucian_lazar.licenta_backend.mapper.ProdusMapper;
 import ro.lucian_lazar.licenta_backend.service.ComandaService;
-import ro.lucian_lazar.licenta_backend.service.ProductService;
+import ro.lucian_lazar.licenta_backend.service.ProdusService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
-    private final ProductService productService;
+    private final ProdusService produsService;
     private final ProdusMapper produsMapper;
     private final ComandaService comandaService;
     private final ComandaMapper comandaMapper;
 
-    public AdminController(ProductService productService, ProdusMapper produsMapper, ComandaService comandaService, ComandaMapper comandaMapper) {
-        this.productService = productService;
+    public AdminController(ProdusService produsService, ProdusMapper produsMapper, ComandaService comandaService, ComandaMapper comandaMapper) {
+        this.produsService = produsService;
         this.produsMapper = produsMapper;
         this.comandaService = comandaService;
         this.comandaMapper = comandaMapper;
@@ -32,7 +32,7 @@ public class AdminController {
     @PostMapping("/produse")
     public ResponseEntity<ProdusDto> addProdus(@RequestBody ProdusDto produsDto) {
         Produs produs = produsMapper.dtoToEntity(produsDto);
-        Produs produsSalvat = productService.save(produs);
+        Produs produsSalvat = produsService.save(produs);
         return ResponseEntity.ok(produsMapper.entityToDto(produsSalvat));
     }
 
@@ -41,7 +41,7 @@ public class AdminController {
         // Asigură-te că ID-ul din cale este folosit, nu cel din body
         produsDto.setId(id);
         Produs produs = produsMapper.dtoToEntity(produsDto);
-        Produs produsActualizat = productService.save(produs);
+        Produs produsActualizat = produsService.save(produs);
         return ResponseEntity.ok(produsMapper.entityToDto(produsActualizat));
     }
 
